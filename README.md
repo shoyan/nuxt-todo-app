@@ -1,12 +1,14 @@
 # nuxt-todo-app
 
-> My extraordinary Nuxt.js project
+Nuxt.jsで実装したTODOアプリです。
+
+![スクリーンショット](./screenshot.png)
 
 ## Build Setup
 
 ``` bash
 # install dependencies
-$ npm run install
+$ npm install
 
 # データベースの作成
 $ sqlite3 -init db/init.sql todo.db
@@ -14,12 +16,6 @@ $ sqlite3 -init db/init.sql todo.db
 # serve with hot reload at localhost:3000
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
 ```
 
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+Build Setupを実行後に `http://localhost:3000` にアクセスすると表示されます。
