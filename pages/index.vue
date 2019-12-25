@@ -1,13 +1,10 @@
 <template>
   <section class="container">
-    <h1>Todo App</h1>
-    <div><input type="text" name="content" v-model="content" /></div>
-    <div>
-      <button @click="save">save</button>
-    </div>
-    <ul v-for="row in todo" :key="row.todo_id">
-      <li>
-        <span>{{ row.content }}</span><span>×</span>
+    <h1>{{ days[date.getDay()] }} <span>{{ months[date.getMonth()] }} {{ date.getDate() }}</span></h1>
+    <input @keydown.enter="save" type="text" name="content" v-model="content" placeholder="+ add a new task"/>
+    <ul>
+      <li v-for="row in todo" :key="row.todo_id">
+        {{ row.content }}
       </li>
     </ul>
   </section>
@@ -19,7 +16,11 @@ import { mapGetters } from 'vuex'
 export default {
   data: function() {
     return {
-      content: ''
+      content: '',
+      date: new Date(),
+      days: ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'],
+      months: ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"]
     }
   },
   computed: {
@@ -31,7 +32,9 @@ export default {
     await store.dispatch('todo/setTodo')
   },
   methods: {
-    save: function() {
+    save: function(event) {
+      // 日本語入力中のEnterキー操作は無効にする
+      if (event.keyCode !== 13) return
       this.$store.dispatch('todo/create', {content: this.content});
       this.content = '';
     }
@@ -40,25 +43,45 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+input {
+  background: #001100;
   display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+  width: 96%;
+  margin: 1rem auto;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #a0a0a0;
+  outline: none;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+h1 {
+  text-align: center;
+  margin: 10px;
+  font-weight: 400;
 }
 
-.links {
-  padding-top: 15px;
+h1 span {
+  font-weight: 300;
+}
+
+ul {
+  padding: 0 0.5em;
+  position: relative;
+}
+
+ul li {
+  line-height: 1.5;
+  padding: 0.5em 0 0.5em 1.5em;
+  border-bottom: 1px solid #666;
+  list-style-type: none!important;
+}
+
+@media screen and (min-width: 768px){
+  input {
+    width: 99%;
+  }
+ 
 }
 </style>
