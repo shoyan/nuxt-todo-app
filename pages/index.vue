@@ -29,7 +29,7 @@ export default {
     }),
   },
  async fetch({ store, query }) {
-    await store.dispatch('todo/setTodo')
+    await store.dispatch('todo/getTodo')
   },
   methods: {
     save: function(event) {

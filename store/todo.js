@@ -10,7 +10,7 @@ export const actions = {
    * @param {object} object.commit - vuex commit
    * @returns {void}
    */
-  async setTodo({ commit }) {
+  async getTodo({ commit }) {
     const { data } = await axios.get(`http://localhost:3000/api/todo/`)
 
     if (data) {
@@ -49,6 +49,6 @@ export const mutations = {
    * @returns {void}
    */
   pushTodoList(state, todo) {
-    state.todoList.push(todo);
+    state.todoList.unshift(todo);
   },
 };
