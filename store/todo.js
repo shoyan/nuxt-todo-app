@@ -27,6 +27,10 @@ export const actions = {
   async create({ commit }, content) {
     const { data } = await axios.post(`http://localhost:3000/api/todo/`, content)
     commit("pushTodoList", data);
+  },
+  async update({ commit }, params) {
+    const { data } = await axios.patch(`http://localhost:3000/api/todo/${params.id}`, { content: params.content })
+    commit("updateTodo", params);
   }
 };
 
@@ -51,4 +55,11 @@ export const mutations = {
   pushTodoList(state, todo) {
     state.todoList.unshift(todo);
   },
+  updateTodo(state, data) {
+    for(let i = 0; i < state.todoList.length; i++) {
+      if (state.todoList[i].todo_id === data.id) {
+        state.todoList[i].content = data.content
+      }
+    }
+  }
 };

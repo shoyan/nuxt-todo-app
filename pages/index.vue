@@ -4,7 +4,7 @@
     <input @keydown.enter="save" type="text" name="content" v-model="content" placeholder="+ add a new task"/>
     <ul>
       <li v-for="row in todo" :key="row.todo_id">
-        {{ row.content }}
+        <input type="text" name="updatedContent" :value="row.content" @blur="update(row.todo_id, $event)" class="task">
       </li>
     </ul>
   </section>
@@ -37,7 +37,10 @@ export default {
       if (event.keyCode !== 13) return
       this.$store.dispatch('todo/create', {content: this.content});
       this.content = '';
-    }
+    },
+    update: function(id, event) {
+      this.$store.dispatch('todo/update', {id, content: event.target.value});
+    },
   }
 }
 </script>
@@ -78,6 +81,10 @@ ul li {
   list-style-type: none!important;
 }
 
+.task {
+  background-color: rgb(53, 54, 58);
+  margin: 0;
+}
 @media screen and (min-width: 768px){
   input {
     width: 99%;
