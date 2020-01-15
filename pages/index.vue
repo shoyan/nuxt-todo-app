@@ -5,7 +5,7 @@
     <transition-group name="list-complete" tag="ul">
       <li v-for="row in todo" :key="row.todo_id" class="task_list list-complete-item">
         <input type="text" name="updatedContent" :value="row.content" @blur="update(row.todo_id, $event)" class="task">
-        <input type="button" value="delete" class="delete" @click="deleteTodo(row.todo_id)">
+        <font-awesome-icon icon="trash" class="trash" @click="deleteTodo(row.todo_id)" />
       </li>
     </transition-group>
   </section>
@@ -95,10 +95,9 @@ ul li {
   display: flex;
 }
 
-.delete {
-  width: 100px;
+.trash {
   cursor: pointer;
-  margin-right: 10px;
+  margin: 15px;
 }
 
 .list-complete-item {
@@ -112,12 +111,16 @@ ul li {
 
 .list-complete-leave-active {
   position: absolute;
+  width: 95%;
 }
 
 @media screen and (min-width: 768px){
   input {
     width: 99%;
   }
- 
+
+  .list-complete-leave-active {
+    width: 99%;
+  } 
 }
 </style>
