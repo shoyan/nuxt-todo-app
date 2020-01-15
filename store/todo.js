@@ -31,7 +31,11 @@ export const actions = {
   async update({ commit }, params) {
     const { data } = await axios.patch(`http://localhost:3000/api/todo/${params.id}`, { content: params.content })
     commit("updateTodo", params);
-  }
+  },
+  async delete({ commit }, id) {
+    const { data } = await axios.delete(`http://localhost:3000/api/todo/${id}`)
+    commit("deleteTodo", id);
+  },
 };
 
 export const getters = {
@@ -61,5 +65,8 @@ export const mutations = {
         state.todoList[i].content = data.content
       }
     }
+  },
+  deleteTodo(state, id) {
+    state.todoList = state.todoList.filter(todo => todo.todo_id !== id)
   }
 };

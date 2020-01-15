@@ -2,11 +2,12 @@
   <section class="container">
     <h1>{{ days[date.getDay()] }} <span>{{ months[date.getMonth()] }} {{ date.getDate() }}</span></h1>
     <input @keydown.enter="save" type="text" name="content" v-model="content" placeholder="+ add a new task"/>
-    <ul>
-      <li v-for="row in todo" :key="row.todo_id">
+    <transition-group name="list-complete" tag="ul">
+      <li v-for="row in todo" :key="row.todo_id" class="task_list list-complete-item">
         <input type="text" name="updatedContent" :value="row.content" @blur="update(row.todo_id, $event)" class="task">
+        <input type="button" value="delete" class="delete" @click="deleteTodo(row.todo_id)">
       </li>
-    </ul>
+    </transition-group>
   </section>
 </template>
 
@@ -35,12 +36,15 @@ export default {
     save: function(event) {
       // 日本語入力中のEnterキー操作は無効にする
       if (event.keyCode !== 13) return
-      this.$store.dispatch('todo/create', {content: this.content});
-      this.content = '';
+      this.$store.dispatch('todo/create', {content: this.content})
+      this.content = ''
     },
     update: function(id, event) {
-      this.$store.dispatch('todo/update', {id, content: event.target.value});
+      this.$store.dispatch('todo/update', {id, content: event.target.value})
     },
+    deleteTodo: function(id) {
+      this.$store.dispatch('todo/delete', id)
+    }
   }
 }
 </script>
@@ -76,7 +80,6 @@ ul {
 
 ul li {
   line-height: 1.5;
-  padding: 0.5em 0 0.5em 1.5em;
   border-bottom: 1px solid #666;
   list-style-type: none!important;
 }
@@ -84,7 +87,33 @@ ul li {
 .task {
   background-color: rgb(53, 54, 58);
   margin: 0;
+  border-radius: 0;
 }
+
+.task_list {
+  background-color: rgb(53, 54, 58);
+  display: flex;
+}
+
+.delete {
+  width: 100px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.list-complete-item {
+  transition: all .8s;
+}
+
+.list-complete-enter, .list-complete-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.list-complete-leave-active {
+  position: absolute;
+}
+
 @media screen and (min-width: 768px){
   input {
     width: 99%;
