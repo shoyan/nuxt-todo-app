@@ -1,36 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./todo.db"
-});
-
-const Todo = sequelize.define(
-  "todo",
-  {
-    todo_id: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    content: {
-      type: Sequelize.STRING
-    }
-  },
-  {
-    freezeTableName: true
-  }
-);
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch(err => {
-    console.error("Unable to connect to the database:", err);
-  });
+const Todo = require('../models/todo')
 
 router.get("/todo", (req, res) => {
   Todo.findAll().then(todo => {
