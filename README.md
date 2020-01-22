@@ -4,6 +4,11 @@ Nuxt.jsで実装したTODOアプリです。
 
 ![スクリーンショット](./screenshot.png)
 
+# Required
+
+* Node.js >= 8
+* SQLite
+
 ## Build Setup
 
 ``` bash
@@ -11,7 +16,7 @@ Nuxt.jsで実装したTODOアプリです。
 $ npm install
 
 # データベースの作成
-$ sqlite3 -init db/init.sql todo.db
+$ npx sequelize-cli db:migrate
 
 # serve with hot reload at localhost:3000
 $ npm run dev

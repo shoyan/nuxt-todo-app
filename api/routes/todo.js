@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const Todo = require('../models/todo')
+const db = require('../../models')
+const Todo = db.Todo
 
 router.get("/todo", (req, res) => {
   Todo.findAll().then(todo => {
@@ -14,7 +15,7 @@ router.get("/todo", (req, res) => {
 router.get("/todo/:id", async (req, res) => {
   const row = await Todo.findOne({
     where: {
-      todo_id: req.params.id
+      id: req.params.id
     }
   })  
 
@@ -37,7 +38,7 @@ router.post("/todo", (req, res) => {
 router.patch("/todo/:id", async (req, res) => {
   const row = await Todo.findOne({
     where: {
-      todo_id: req.params.id
+      id: req.params.id
     }
   })  
 
@@ -57,7 +58,7 @@ router.patch("/todo/:id", async (req, res) => {
 router.delete("/todo/:id", (req, res) => {
   Todo.destroy({
     where: {
-      todo_id: req.params.id
+      id: req.params.id
     }
   }).then(() => {
     res.send('');
