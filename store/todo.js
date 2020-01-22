@@ -61,12 +61,12 @@ export const mutations = {
   },
   updateTodo(state, data) {
     for(let i = 0; i < state.todoList.length; i++) {
-      if (state.todoList[i].todo_id === data.id) {
+      if (state.todoList[i].id === data.id) {
         state.todoList[i].content = data.content
       }
     }
   },
   deleteTodo(state, id) {
-    state.todoList = state.todoList.filter(todo => todo.todo_id !== id)
+    state.todoList = state.todoList.filter(todo => todo.id !== id)
   }
 };

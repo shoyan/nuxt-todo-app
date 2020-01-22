@@ -3,9 +3,9 @@
     <h1>{{ days[date.getDay()] }} <span>{{ months[date.getMonth()] }} {{ date.getDate() }}</span></h1>
     <input @keydown.enter="save" type="text" name="content" v-model="content" placeholder="+ add a new task"/>
     <transition-group name="list-complete" tag="ul">
-      <li v-for="row in todo" :key="row.todo_id" class="task_list list-complete-item">
-        <input type="text" name="updatedContent" :value="row.content" @blur="update(row.todo_id, $event)" class="task">
-        <font-awesome-icon icon="trash" class="trash" @click="deleteTodo(row.todo_id)" />
+      <li v-for="row in todo" :key="row.id" class="task_list list-complete-item">
+        <input type="text" name="updatedContent" :value="row.content" @blur="update(row.id, $event)" class="task">
+        <font-awesome-icon icon="trash" class="trash" @click="deleteTodo(row.id)" />
       </li>
     </transition-group>
   </section>
