@@ -2,7 +2,7 @@
 
 Nuxt.jsで実装したTODOアプリです。
 
-![スクリーンショット](./screenshot.png)
+<img src="./screenshot.png" width="250px">
 
 # Required
 
