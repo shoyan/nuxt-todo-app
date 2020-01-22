@@ -1,9 +1,14 @@
 const Sequelize = require("sequelize");
-console.log(process.env)
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./todo.db"
-});
+if (process.env.NODE_ENV === "development") {
+  const sequelize = new Sequelize({
+    dialect: "sqlite",
+    storage: "./todo.db"
+  });
+} else {
+  const sequelize = new Sequelize(
+    "postgres://user:pass@example.com:5432/dbname"
+  ); // Example for postgres
+}
 
 sequelize
   .authenticate()
