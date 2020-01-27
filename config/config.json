@@ -18,6 +18,6 @@
     "password": null,
     "database": "todo_production",
     "host": "127.0.0.1",
-    "dialect": "pg"
+    "dialect": "postgres"
   }
 }
