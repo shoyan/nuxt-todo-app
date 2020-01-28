@@ -39,13 +39,13 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    "nuxt-fontawesome",
+    "nuxt-fontawesome"
   ],
   fontawesome: {
     imports: [
       {
-        set: '@fortawesome/free-solid-svg-icons',
-        icons: ['fas']
+        set: "@fortawesome/free-solid-svg-icons",
+        icons: ["fas"]
       }
     ]
   },
@@ -63,5 +63,8 @@ export default {
      */
     extend(config, ctx) {}
   },
-  serverMiddleware: ["~/api/index.js"]
+  serverMiddleware: ["~/api/index.js"],
+  env: {
+    baseUrl: process.env.BASE_URL || "http://localhost:3000"
+  }
 };
