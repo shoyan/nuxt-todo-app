@@ -3,7 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   todoList: [],
 });
-console.log(process.env)
+console.log(process.env.baseUrl, process.env.BASE_URL);
 export const actions = {
   /**
    * Todo取得
