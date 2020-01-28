@@ -11,7 +11,9 @@ export const actions = {
    * @returns {void}
    */
   async getTodo({ commit }) {
-    const { data } = await axios.get(`${process.env.baseUrl}/api/todo/`);
+    const { data } = await axios.get(
+      `${process.env.WEB_URL}/api/todo/`
+    );
 
     if (data) {
       data.forEach(todo => {
@@ -25,24 +27,15 @@ export const actions = {
    * @returns {void}
    */
   async create({ commit }, content) {
-    const { data } = await axios.post(
-      `${process.env.baseUrl}/api/todo/`,
-      content
-    );
+    const { data } = await axios.post(`${process.env.WEB_URL}/api/todo/`, content)
     commit("pushTodoList", data);
   },
   async update({ commit }, params) {
-    const {
-      data
-    } = await axios.patch(`${process.env.baseUrl}/api/todo/${params.id}`, {
-      content: params.content
-    });
+    const { data } = await axios.patch(`${process.env.WEB_URL}/api/todo/${params.id}`, { content: params.content })
     commit("updateTodo", params);
   },
   async delete({ commit }, id) {
-    const { data } = await axios.delete(
-      `${process.env.baseUrl}/api/todo/${id}`
-    );
+    const { data } = await axios.delete(`${process.env.WEB_URL}/api/todo/${id}`)
     commit("deleteTodo", id);
   },
 };
