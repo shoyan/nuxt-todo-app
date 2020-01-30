@@ -3,7 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   todoList: [],
 });
-
+console.log(process.env.baseUrl, process.env.BASE_URL);
 export const actions = {
   /**
    * Todo取得
@@ -11,7 +11,9 @@ export const actions = {
    * @returns {void}
    */
   async getTodo({ commit }) {
-    const { data } = await axios.get(`http://localhost:3000/api/todo/`)
+    const { data } = await axios.get(
+      `${process.env.baseUrl}/api/todo/`
+    );
 
     if (data) {
       data.forEach(todo => {
@@ -25,15 +27,15 @@ export const actions = {
    * @returns {void}
    */
   async create({ commit }, content) {
-    const { data } = await axios.post(`http://localhost:3000/api/todo/`, content)
+    const { data } = await axios.post(`${process.env.baseUrl}/api/todo/`, content)
     commit("pushTodoList", data);
   },
   async update({ commit }, params) {
-    const { data } = await axios.patch(`http://localhost:3000/api/todo/${params.id}`, { content: params.content })
+    const { data } = await axios.patch(`${process.env.baseUrl}/api/todo/${params.id}`, { content: params.content })
     commit("updateTodo", params);
   },
   async delete({ commit }, id) {
-    const { data } = await axios.delete(`http://localhost:3000/api/todo/${id}`)
+    const { data } = await axios.delete(`${process.env.baseUrl}/api/todo/${id}`)
     commit("deleteTodo", id);
   },
 };
