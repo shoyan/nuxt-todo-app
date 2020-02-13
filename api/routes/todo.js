@@ -4,9 +4,15 @@ const db = require('../../models')
 const Todo = db.Todo
 
 router.get("/todo", (req, res) => {
-  Todo.findAll().then(todo => {
+  Todo.findAll({
+    order: [
+      ["updatedAt", "DESC"],
+    ]
+  })
+  .then(todo => {
     res.json(todo);
-  }).catch((err) => {
+  })
+  .catch(err => {
     console.error(err);
     res.json(err);
   });

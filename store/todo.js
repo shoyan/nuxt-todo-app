@@ -14,7 +14,6 @@ export const actions = {
     const { data } = await axios.get(
       `${process.env.baseUrl}/api/todo/`
     );
-
     if (data) {
       data.forEach(todo => {
         commit("pushTodoList", todo);
@@ -31,7 +30,6 @@ export const actions = {
     commit("pushTodoList", data);
   },
   async update({ commit }, params) {
-    console.log(params)
     const { data } = await axios.patch(`${process.env.baseUrl}/api/todo/${params.id}`, { ...params })
     commit("updateTodo", data);
   },
@@ -60,7 +58,7 @@ export const mutations = {
    * @returns {void}
    */
   pushTodoList(state, todo) {
-    state.todoList.unshift(todo);
+    state.todoList.push(todo);
   },
   updateTodo(state, data) {
     for(let i = 0; i < state.todoList.length; i++) {
@@ -68,6 +66,10 @@ export const mutations = {
         state.todoList[i] = data
       }
     }
+    // 更新日順にソート
+    state.todoList.sort(function(a, b) {
+      return a.updatedAt < b.updatedAt ? 1 : -1;
+    });
   },
   deleteTodo(state, id) {
     state.todoList = state.todoList.filter(todo => todo.id !== id)
