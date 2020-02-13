@@ -4,6 +4,7 @@
     <input @keydown.enter="save" type="text" name="content" v-model="content" placeholder="+ add a new task"/>
     <transition-group name="list-complete" tag="ul">
       <li v-for="row in todo" :key="row.id" class="task_list list-complete-item">
+        <input class="done" type="checkbox" name="done" :checked="row.done" @input="updateDone(row.id, $event)"> 
         <input type="text" name="updatedContent" :value="row.content" @blur="update(row.id, $event)" class="task">
         <font-awesome-icon icon="trash" class="trash" @click="deleteTodo(row.id)" />
       </li>
@@ -44,7 +45,10 @@ export default {
     },
     deleteTodo: function(id) {
       this.$store.dispatch('todo/delete', id)
-    }
+    },
+    updateDone: function(id, event) {
+      this.$store.dispatch('todo/update', {id, done: event.target.checked})
+    },
   }
 }
 </script>
@@ -112,6 +116,10 @@ ul li {
 .list-complete-leave-active {
   position: absolute;
   width: 95%;
+}
+
+.done {
+  width: 20px;
 }
 
 @media screen and (min-width: 768px){

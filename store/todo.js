@@ -3,7 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   todoList: [],
 });
-console.log(process.env.baseUrl, process.env.BASE_URL);
+
 export const actions = {
   /**
    * Todo取得
@@ -31,8 +31,9 @@ export const actions = {
     commit("pushTodoList", data);
   },
   async update({ commit }, params) {
-    const { data } = await axios.patch(`${process.env.baseUrl}/api/todo/${params.id}`, { content: params.content })
-    commit("updateTodo", params);
+    console.log(params)
+    const { data } = await axios.patch(`${process.env.baseUrl}/api/todo/${params.id}`, { ...params })
+    commit("updateTodo", data);
   },
   async delete({ commit }, id) {
     const { data } = await axios.delete(`${process.env.baseUrl}/api/todo/${id}`)
@@ -64,7 +65,7 @@ export const mutations = {
   updateTodo(state, data) {
     for(let i = 0; i < state.todoList.length; i++) {
       if (state.todoList[i].id === data.id) {
-        state.todoList[i].content = data.content
+        state.todoList[i] = data
       }
     }
   },

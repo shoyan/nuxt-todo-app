@@ -46,7 +46,13 @@ router.patch("/todo/:id", async (req, res) => {
     res.sendStatus(404);
   }
 
-  row.content = req.body.content
+  const whiteList = ['content','done']
+  whiteList.forEach(val => {
+    if (req.body[val] !== undefined) {
+      row[val] = req.body[val]
+    }
+  })
+
   row.save().then(() => {
     res.json(row);
   }).catch((err) => {
