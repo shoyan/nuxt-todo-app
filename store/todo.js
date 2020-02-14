@@ -3,7 +3,7 @@ import axios from 'axios'
 export const state = () => ({
   todoList: [],
 });
-console.log(process.env.baseUrl, process.env.BASE_URL);
+
 export const actions = {
   /**
    * Todo取得
@@ -14,7 +14,6 @@ export const actions = {
     const { data } = await axios.get(
       `${process.env.baseUrl}/api/todo/`
     );
-
     if (data) {
       data.forEach(todo => {
         commit("pushTodoList", todo);
@@ -31,8 +30,8 @@ export const actions = {
     commit("pushTodoList", data);
   },
   async update({ commit }, params) {
-    const { data } = await axios.patch(`${process.env.baseUrl}/api/todo/${params.id}`, { content: params.content })
-    commit("updateTodo", params);
+    const { data } = await axios.patch(`${process.env.baseUrl}/api/todo/${params.id}`, { ...params })
+    commit("updateTodo", data);
   },
   async delete({ commit }, id) {
     const { data } = await axios.delete(`${process.env.baseUrl}/api/todo/${id}`)
@@ -59,14 +58,18 @@ export const mutations = {
    * @returns {void}
    */
   pushTodoList(state, todo) {
-    state.todoList.unshift(todo);
+    state.todoList.push(todo);
   },
   updateTodo(state, data) {
     for(let i = 0; i < state.todoList.length; i++) {
       if (state.todoList[i].id === data.id) {
-        state.todoList[i].content = data.content
+        state.todoList[i] = data
       }
     }
+    // 更新日順にソート
+    state.todoList.sort(function(a, b) {
+      return a.updatedAt < b.updatedAt ? 1 : -1;
+    });
   },
   deleteTodo(state, id) {
     state.todoList = state.todoList.filter(todo => todo.id !== id)

@@ -4,9 +4,15 @@ const db = require('../../models')
 const Todo = db.Todo
 
 router.get("/todo", (req, res) => {
-  Todo.findAll().then(todo => {
+  Todo.findAll({
+    order: [
+      ["updatedAt", "DESC"],
+    ]
+  })
+  .then(todo => {
     res.json(todo);
-  }).catch((err) => {
+  })
+  .catch(err => {
     console.error(err);
     res.json(err);
   });
@@ -46,7 +52,13 @@ router.patch("/todo/:id", async (req, res) => {
     res.sendStatus(404);
   }
 
-  row.content = req.body.content
+  const whiteList = ['content','done']
+  whiteList.forEach(val => {
+    if (req.body[val] !== undefined) {
+      row[val] = req.body[val]
+    }
+  })
+
   row.save().then(() => {
     res.json(row);
   }).catch((err) => {
