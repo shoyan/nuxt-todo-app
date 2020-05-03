@@ -4,6 +4,10 @@ Nuxt.jsで実装したTODOアプリです。
 
 <img src="./screenshot.png" width="250px">
 
+# デモサイト
+
+https://young-castle-95625.herokuapp.com/
+
 # Required
 
 * Node.js >= 8
